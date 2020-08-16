@@ -12,19 +12,27 @@ losunDisel = 2.68
 gogn = pd.read_excel('Eldsneytisgogn.xlsx')
 
 siud_gogn = gogn.loc[(gogn['TegundNr'] == 1)]
+siud_gogn = siud_gogn.drop(columns=['NotflNr'])
+siud_gogn = siud_gogn.drop(columns=['NotFlHeiti'])
+siud_gogn = siud_gogn.drop(columns=['TegundHeiti'])
+siud_gogn = siud_gogn.drop(columns=['EldsnTegNr'])
+siud_gogn = siud_gogn.drop(columns=['Frumorka'])
 
-#print(siud_gogn.head(25))
 
 bensingogn = siud_gogn.to_csv('bensingogn.csv', index = True)
 
 
 bensin = siud_gogn.loc[(siud_gogn['EldsnTegHeiti'] == 'Bensín')]
 bensin['Losun (kg)'] = bensin['Notkun']*losunBensin
+#bensin['heildarlosun'] = bensin.groupby['Ar'].bensin.sum(axis=0)
 bensin.to_csv('bensin.csv', index = True)
 
 disel = siud_gogn.loc[(siud_gogn['EldsnTegHeiti'] == 'Dísilolía')]
 disel['Losun (kg)'] = disel['Notkun']*losunDisel
 disel.to_csv('disel.csv', index = True)
+
+
+
 
 annad = siud_gogn.loc[(siud_gogn['EldsnTegHeiti'] != 'Bensín') & (siud_gogn['EldsnTegHeiti'] != 'Dísilolía') & (siud_gogn['EldsnTegHeiti'] != 'Rafmagn')]
 annad['Losun (kg)'] = annad['Notkun']*0
