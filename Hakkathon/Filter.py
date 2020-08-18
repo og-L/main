@@ -6,9 +6,13 @@ Created on Fri Aug 14 18:10:02 2020
 """
 
 import pandas as pd
-### Vantar góða heimild fyrir þessar tölur
-losunBensin = 2.31
-losunDisel = 2.68
+### https://www.nrcan.gc.ca/sites/www.nrcan.gc.ca/files/oee/pdf/transportation/fuel-efficient-technologies/autosmart_factsheet_6_e.pdf
+losunBensin = 2.29
+losunDisel = 2.66
+litrarPrTonnBensin = 1176.5
+litrarPrTonnDisil = 1129.9
+### Hér væri gott að hafa tölu != 0 en við miðum við það í bili, en raunverulegt er talið í grömmum
+### frekar en kg skv ON
 losunRaf = 0
 
 pd.set_option('mode.chained_assignment', None)
@@ -33,8 +37,8 @@ def heildarnotkun(gogn):
     #print(gogn)
     lastar = 0 
     ar = 0 
-    input_data = [] 
-    ars = [] 
+    input_data = []
+    ars = []
     arsum = 0 
     for x in range(0,gogn.shape[0]): 
         ar = gogn.iat[x,0] 
@@ -56,12 +60,14 @@ def heildarnotkun(gogn):
 ### Útbúum sér gögn fyrir þrjár tegundir af eldsneyti í bifreiðar: Bensín, dísilolíu og rafmagn
 
 bensin = siud_gogn.loc[(siud_gogn['EldsnTegHeiti'] == 'Bensín')]
+bensin['Notkun'] = bensin['Notkun']*litrarPrTonnBensin
 bensin['Losun (kg)'] = bensin['Notkun']*losunBensin
 bensinTot = heildarnotkun(bensin)
 bensinTot.to_csv('bensin.csv')
 
 
 disel = siud_gogn.loc[(siud_gogn['EldsnTegHeiti'] == 'Dísilolía')]
+disel['Notkun'] = disel['Notkun']*litrarPrTonnDisil
 disel['Losun (kg)'] = disel['Notkun']*losunDisel
 diselTot = heildarnotkun(disel)
 diselTot.to_csv('disel.csv')
