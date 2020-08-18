@@ -11,6 +11,9 @@ soup = BeautifulSoup(my_HTML, 'html.parser')
 
 my_string = soup.get_text().split()
 
-print(my_string)
+CO2_stuff_index = my_string.index("CO2-gildi")
+
+print(my_string[CO2_stuff_index+2])
+
 
 
