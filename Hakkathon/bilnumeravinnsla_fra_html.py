@@ -13,7 +13,7 @@ my_string = soup.get_text().split()
 
 CO2_stuff_index = my_string.index("CO2-gildi")
 
-print(my_string[CO2_stuff_index+2])
+print("CO2-gildi " + my_string[CO2_stuff_index+1] + " " + my_string[CO2_stuff_index+2] + " " + my_string[CO2_stuff_index+3])
 
 
 
